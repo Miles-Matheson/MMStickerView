@@ -19,18 +19,25 @@ public class MMStickerView:UIView,StickerViewDelegate{
     ///边框颜色
     public var outlineBorderColor:UIColor?
     
+    /// 自定义关闭按钮图片
+    public var closeImage:UIImage?
+    
+    /// 自定义缩放按钮图片
+    public var rotateImage:UIImage?
+    
     ///当前展示的图片
     public var image:UIImage? = nil{didSet{
-        imageView.image = image
+        imageView.image = image//在初始化中赋值不会调用didSet
     }}
     public weak var delegate:StickerViewDelegate? = nil
     
-    public init(image:UIImage){
+    public init(_ image:UIImage){
         super.init(frame: .zero)
         self.image = image
         self.imageView.image = image
         setupUI()
     }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -74,7 +81,7 @@ public class MMStickerView:UIView,StickerViewDelegate{
     }
     
     
-    /// 添加贴纸(自动除重)
+    /// 添加贴纸(根据StickItem自动除重)
     /// - Parameter item: MMPhotoStickItem
     public func addStick(item:MMPhotoStickItem){
         
@@ -91,9 +98,13 @@ public class MMStickerView:UIView,StickerViewDelegate{
             let stickerView3 = MMStickerContentView.init(contentView: testImage)
             stickerView3.center = CGPoint.init(x: 150, y: 150)
             stickerView3.delegate = self
-            stickerView3.setImage(UIImage.init(named: "Close")!, forHandler: StickerViewHandler.close)
-            stickerView3.setImage(UIImage.init(named: "Rotate")!, forHandler: StickerViewHandler.rotate)
-            //           stickerView3.setImage(UIImage.init(named: "Flip")!, forHandler: StickerViewHandler.flip)
+        
+            let closeImage  = closeImage ?? UIImage(named: "Close.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+            var rotateImage = rotateImage ?? UIImage(named: "Rotate.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+    
+            stickerView3.setImage(closeImage!, forHandler: StickerViewHandler.close)
+            stickerView3.setImage(rotateImage!, forHandler: StickerViewHandler.rotate)
+            //stickerView3.setImage(UIImage.init(named: "Flip")!, forHandler: StickerViewHandler.flip)
             stickerView3.showEditingHandlers = false
             stickerView3.tag = item.section
             if let outlineBorderColor = outlineBorderColor{
@@ -124,7 +135,7 @@ public class MMStickerView:UIView,StickerViewDelegate{
     }
     
     
-    /// 选中贴纸
+    /// 选中指定贴纸
     /// - Parameter selectIndex: Section
     public func selectedStickView(_ selectIndex:Int){
         
@@ -134,7 +145,7 @@ public class MMStickerView:UIView,StickerViewDelegate{
         }
     }
     
-    /// 选中贴纸
+    /// 选中指定贴纸
     /// - Parameter stickView: MMStickerContentView
     public func selectedStickView(_ stickView:MMStickerContentView){
         
@@ -144,6 +155,8 @@ public class MMStickerView:UIView,StickerViewDelegate{
     }
     
     
+    /// 获取最终图片
+    /// - Returns: UIImage?
     public func getResultImage()->UIImage?{
         
         currentStickerView?.showEditingHandlers = false
@@ -161,7 +174,6 @@ public class MMStickerView:UIView,StickerViewDelegate{
     }
     
     private  func mergeImages(view: UIView) -> UIImage? {
-        
         UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
         view.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -359,7 +371,7 @@ public class MMStickerContentView: UIView {
         self.enableFlip = true
         
         self.minimumSize = self.defaultMinimumSize
-//        self.outlineBorderColor = UIColor.init(hex: "#C1C1C1")
+        self.outlineBorderColor = UIColor(red: 193/255.0, green: 193/255.0, blue: 193/255.0, alpha: 1)
     }
     
     public  required init?(coder aDecoder: NSCoder) {
