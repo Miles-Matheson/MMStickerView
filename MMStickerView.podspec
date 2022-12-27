@@ -19,9 +19,9 @@ Pod::Spec.new do |s|
 
   s.author       = { "Miles" => "liyida188@163.com" }
 
-  s.platform     = :ios, "10.0"
+  s.platform     = :ios, "11.0"
 
-  s.source       = { :git => "https://github.com/Miles-Matheson/MMStickerView.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/Miles-Matheson/MMStickerView.git", :tag => s.version.to_s }
 
   s.requires_arc = true
 
