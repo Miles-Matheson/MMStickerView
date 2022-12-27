@@ -7,21 +7,25 @@
 
 import UIKit
 
-
-class MMStickerView:UIView,StickerViewDelegate{
+public class MMStickerView:UIView,StickerViewDelegate{
     
     private var imageView:UIImageView = UIImageView()
     private var contentSticks:[MMStickerContentView] = []
-    var contentInset:UIEdgeInsets = .zero{didSet{
+    
+    /// 内容偏移
+    public var contentInset:UIEdgeInsets = .zero{didSet{
         self.layoutSubviews()
     }}
+    ///边框颜色
+    public var outlineBorderColor:UIColor?
     
-    var image:UIImage? = nil{didSet{
+    ///当前展示的图片
+    public var image:UIImage? = nil{didSet{
         imageView.image = image
     }}
-    weak var delegate:StickerViewDelegate? = nil
+    public weak var delegate:StickerViewDelegate? = nil
     
-    init(image:UIImage){
+    public init(image:UIImage){
         super.init(frame: .zero)
         self.image = image
         self.imageView.image = image
@@ -43,7 +47,7 @@ class MMStickerView:UIView,StickerViewDelegate{
         imageView.tag = 10000
     }
 
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         imageView.frame = .init(x: contentInset.left, y: contentInset.top, width: self.bounds.size.width-contentInset.left-contentInset.right, height: self.bounds.size.height-contentInset.top-contentInset.bottom)
     }
@@ -92,6 +96,9 @@ class MMStickerView:UIView,StickerViewDelegate{
             //           stickerView3.setImage(UIImage.init(named: "Flip")!, forHandler: StickerViewHandler.flip)
             stickerView3.showEditingHandlers = false
             stickerView3.tag = item.section
+            if let outlineBorderColor = outlineBorderColor{
+                stickerView3.outlineBorderColor = outlineBorderColor
+            }
             self.addSubview(stickerView3)
             self.contentSticks.append(stickerView3)
             self.currentStickerView = stickerView3
@@ -163,37 +170,37 @@ class MMStickerView:UIView,StickerViewDelegate{
     }
     
     
-    func stickerViewDidTap(_ stickerView: MMStickerContentView) {
+    public func stickerViewDidTap(_ stickerView: MMStickerContentView) {
         self.currentStickerView = stickerView
         delegate?.stickerViewDidTap(stickerView)
     }
     
-    func stickerViewDidBeginMoving(_ stickerView: MMStickerContentView) {
+    public func stickerViewDidBeginMoving(_ stickerView: MMStickerContentView) {
         self.currentStickerView = stickerView
         delegate?.stickerViewDidBeginMoving(stickerView)
     }
     
-    func stickerViewDidChangeMoving(_ stickerView: MMStickerContentView) {
+    public func stickerViewDidChangeMoving(_ stickerView: MMStickerContentView) {
         delegate?.stickerViewDidChangeMoving(stickerView)
     }
     
-    func stickerViewDidEndMoving(_ stickerView: MMStickerContentView) {
+    public func stickerViewDidEndMoving(_ stickerView: MMStickerContentView) {
         delegate?.stickerViewDidEndMoving(stickerView)
     }
     
-    func stickerViewDidBeginRotating(_ stickerView: MMStickerContentView) {
+    public func stickerViewDidBeginRotating(_ stickerView: MMStickerContentView) {
         delegate?.stickerViewDidBeginRotating(stickerView)
     }
     
-    func stickerViewDidChangeRotating(_ stickerView: MMStickerContentView) {
+    public func stickerViewDidChangeRotating(_ stickerView: MMStickerContentView) {
         delegate?.stickerViewDidChangeRotating(stickerView)
     }
     
-    func stickerViewDidEndRotating(_ stickerView: MMStickerContentView) {
+    public func stickerViewDidEndRotating(_ stickerView: MMStickerContentView) {
         delegate?.stickerViewDidEndRotating(stickerView)
     }
     
-    func stickerViewDidClose(_ stickerView: MMStickerContentView) {
+    public func stickerViewDidClose(_ stickerView: MMStickerContentView) {
         
         contentSticks = contentSticks.enumerated().compactMap({_,element in element.tag == stickerView.tag ? nil : element})
         delegate?.stickerViewDidClose(stickerView)
@@ -352,7 +359,7 @@ public class MMStickerContentView: UIView {
         self.enableFlip = true
         
         self.minimumSize = self.defaultMinimumSize
-        self.outlineBorderColor = UIColor.init(hex: "#C1C1C1")
+//        self.outlineBorderColor = UIColor.init(hex: "#C1C1C1")
     }
     
     public  required init?(coder aDecoder: NSCoder) {

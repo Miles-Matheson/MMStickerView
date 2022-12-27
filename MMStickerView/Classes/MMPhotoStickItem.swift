@@ -7,12 +7,12 @@
 
 import UIKit
 
-class MMPhotoStickItem{
+public class MMPhotoStickItem:NSObject{
     
-    init(image:UIImage,section:Int){
+    public init(image:UIImage,section:Int){
         self.image = image
         self.section = section
     }
-    var image:UIImage
-    var section:Int    
+    public var image:UIImage
+    public var section:Int
 }
