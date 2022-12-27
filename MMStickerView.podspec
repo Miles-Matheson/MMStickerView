@@ -22,14 +22,9 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "11.0"
 
   s.source       = { :git => "https://github.com/Miles-Matheson/MMStickerView.git", :tag => s.version.to_s }
-
-  s.requires_arc = true
-
-  s.xcconfig = {'ENABLE_BITCODE' => 'NO'}
-
-  s.requires_arc = true
+  s.frameworks       = 'UIKit'
   s.resources      = 'MMStickerView/Assets/*.xcassets' 
-  s.source_files   = 'MMStickerView/Classes/**/*.{h,m,mm,a,pch,swift}'
+  s.source_files   = 'MMStickerView/Classes/**/*'
   s.swift_versions   = ['5.1', '5.2', '5.3']
   s.ios.deployment_target = '11.0'
 
