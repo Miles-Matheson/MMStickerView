@@ -27,11 +27,8 @@ Pod::Spec.new do |s|
 
   s.xcconfig = {'ENABLE_BITCODE' => 'NO'}
 
-  s.default_subspec = 'All'
-  	s.subspec 'All' do |spec|
-	s.requires_arc = true
-    	s.resources      = 'MMStickerView/Assets/*.xcassets' 
-	s.source_files   = 'MMStickerView/Classes/**/*.{h,m,mm,a,pch,swift}'
-  end
+  s.requires_arc = true
+  s.resources      = 'MMStickerView/Assets/*.xcassets' 
+  s.source_files   = 'MMStickerView/Classes/**/*.{h,m,mm,a,pch,swift}'
 
 end
