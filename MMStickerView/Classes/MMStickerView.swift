@@ -77,6 +77,7 @@ public class MMStickerView:UIView,StickerViewDelegate{
                 currentStickerView.showEditingHandlers = true
                 currentStickerView.superview?.bringSubviewToFront(currentStickerView)
             }
+            //ft:78:47: error: 'bringSubviewToFront' has been renamed to 'bringSubview(toFront:)'
         }
     }
     
@@ -100,7 +101,7 @@ public class MMStickerView:UIView,StickerViewDelegate{
             stickerView3.delegate = self
         
             let closeImage  = closeImage ?? UIImage(named: "Close.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
-            var rotateImage = rotateImage ?? UIImage(named: "Rotate.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+            let rotateImage = rotateImage ?? UIImage(named: "Rotate.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
     
             stickerView3.setImage(closeImage!, forHandler: StickerViewHandler.close)
             stickerView3.setImage(rotateImage!, forHandler: StickerViewHandler.rotate)

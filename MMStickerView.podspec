@@ -15,9 +15,9 @@ Pod::Spec.new do |s|
 
   s.homepage     = "https://github.com/Miles-Matheson"
 
-  s.license      = "MIT"
+  s.license          = { :type => 'MIT', :file => 'LICENSE' }
 
-  s.author       = { "John" => "liyida188@163.com" }
+  s.author       = { "Miles" => "liyida188@163.com" }
 
   s.platform     = :ios, "10.0"
 
@@ -30,5 +30,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.resources      = 'MMStickerView/Assets/*.xcassets' 
   s.source_files   = 'MMStickerView/Classes/**/*.{h,m,mm,a,pch,swift}'
+  s.swift_versions   = ['5.1', '5.2', '5.3']
+  s.ios.deployment_target = '11.0'
 
 end
