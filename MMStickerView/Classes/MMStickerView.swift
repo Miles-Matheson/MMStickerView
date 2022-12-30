@@ -93,26 +93,30 @@ public class MMStickerView:UIView,StickerViewDelegate{
             
         }else{
             
-            let testImage = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 240, height: 240))
+            let width = self.bounds.width - contentInset.left - contentInset.right
+            let height = self.bounds.height - contentInset.top - contentInset.bottom
+            
+            let testImage = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: width, height: height))
             testImage.image = item.image
             testImage.contentMode = .scaleAspectFit
-            let stickerView3 = MMStickerContentView.init(contentView: testImage)
-            stickerView3.center = CGPoint.init(x: 150, y: 150)
-            stickerView3.delegate = self
+            let contentStickerView = MMStickerContentView.init(contentView: testImage)
+            contentStickerView.center = CGPoint.init(x: self.bounds.width/2, y: self.bounds.height/2)
+            
+            contentStickerView.delegate = self
         
             let closeImage  = closeImage ?? UIImage(named: "Close.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
             let rotateImage = rotateImage ?? UIImage(named: "Rotate.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
     
-            stickerView3.setImage(closeImage!, forHandler: StickerViewHandler.close)
-            stickerView3.setImage(rotateImage!, forHandler: StickerViewHandler.rotate)
-            //stickerView3.setImage(UIImage.init(named: "Flip")!, forHandler: StickerViewHandler.flip)
-            stickerView3.showEditingHandlers = false
-            stickerView3.tag = item.section
+            contentStickerView.setImage(closeImage!, forHandler: StickerViewHandler.close)
+            contentStickerView.setImage(rotateImage!, forHandler: StickerViewHandler.rotate)
+            //contentStickerView.setImage(UIImage.init(named: "Flip")!, forHandler: StickerViewHandler.flip)
+            contentStickerView.showEditingHandlers = false
+            contentStickerView.tag = item.section
             if let outlineBorderColor = outlineBorderColor{
-                stickerView3.outlineBorderColor = outlineBorderColor
+                contentStickerView.outlineBorderColor = outlineBorderColor
             }
-            self.addSubview(stickerView3)
-            self.contentSticks.append(stickerView3)
+            self.addSubview(contentStickerView)
+            self.contentSticks.append(contentStickerView)
             self.currentStickerView = stickerView3
         }
     }
