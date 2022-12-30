@@ -117,7 +117,7 @@ public class MMStickerView:UIView,StickerViewDelegate{
             }
             self.addSubview(contentStickerView)
             self.contentSticks.append(contentStickerView)
-            self.currentStickerView = stickerView3
+            self.currentStickerView = contentStickerView
         }
     }
     
